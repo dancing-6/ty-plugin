@@ -1,8 +1,8 @@
 {
-  "openapi": "3.0.0",
+  "openapi": "3.1.0",
   "info": {
     "title": "Tavily Search",
-    "description": "Search the web using Tavily AI.",
+    "description": "A search engine optimized for LLMs, aimed at efficient, quick and persistent search results.",
     "version": "1.0.0"
   },
   "servers": [
@@ -13,68 +13,49 @@
   "paths": {
     "/search": {
       "post": {
-        "summary": "Perform a web search",
-        "operationId": "search",
+        "description": "Performs a search using Tavily API and returns the results.",
+        "operationId": "tavilySearch",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["query"],
                 "properties": {
                   "query": {
                     "type": "string",
-                    "description": "The search query"
+                    "description": "The search query."
                   },
                   "search_depth": {
                     "type": "string",
                     "enum": ["basic", "advanced"],
+                    "description": "The depth of the search. 'basic' is faster, 'advanced' is more thorough.",
                     "default": "basic"
                   },
                   "include_answer": {
                     "type": "boolean",
+                    "description": "Include a short answer to the query in the results.",
                     "default": false
                   },
                   "include_raw_content": {
                     "type": "boolean",
+                    "description": "Include the raw content of the search results.",
                     "default": false
                   },
                   "max_results": {
                     "type": "integer",
+                    "description": "The maximum number of search results to return.",
                     "default": 5
                   }
-                }
+                },
+                "required": ["query"]
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Search results",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "query": { "type": "string" },
-                    "results": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "title": { "type": "string" },
-                          "url": { "type": "string" },
-                          "content": { "type": "string" },
-                          "score": { "type": "number" }
-                        }
-                      }
-                    },
-                    "answer": { "type": "string" }
-                  }
-                }
-              }
-            }
+            "description": "Successful search response."
           }
         }
       }
@@ -93,4 +74,4 @@
       "bearerAuth": []
     }
   ]
-                }
+}
